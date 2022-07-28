@@ -1,0 +1,66 @@
+# scis_sector_shaping
+# Author: scisneromam
+# based on the IRM mod from Iyur
+# Mod system ui related triggers
+# SYSTEM # ----------------------------------------------------------------------------------------
+# This = System
+scis_sector_shaping_system_detachedable = {
+	and = {
+	 scis_sector_shaping_system_detachedable_sector = yes
+	 scis_sector_shaping_system_detachedable_capital = yes
+	 scis_sector_shaping_system_detachedable_colony = yes
+	}
+}
+
+# already detached
+scis_sector_shaping_system_detachedable_sector = {
+	exists = sector
+}
+
+# not capital system
+scis_sector_shaping_system_detachedable_capital = {
+	not = {
+		any_system_planet = {
+			is_capital = yes
+		}
+	}
+}
+
+# last sector colony
+scis_sector_shaping_system_detachedable_colony = {
+	owner = {
+		count_system_within_border = {
+			limit = {
+				exists = sector
+				sector = {
+					is_same_value = prevprevprev.sector
+				}
+				if = {
+					limit = {
+						prevprev = {
+							any_system_planet = {
+								is_colony = yes
+							}
+						}
+					}
+					any_system_planet = {
+						is_colony = yes
+					}
+				}
+			}
+			count > 1
+		}
+	}
+}
+
+scis_sector_shaping_system_attachedable = {
+	and = {
+	 scis_sector_shaping_system_attachedable_sector = yes
+	}
+}
+
+scis_sector_shaping_system_attachedable_sector = {
+	not = {
+		exists = sector
+	}
+}

@@ -1,0 +1,35 @@
+# scis_sector_shaping
+# Author: scisneromam
+# based on the IRM mod from Iyur
+# Special decisions
+
+# System management screen
+decision_system = {
+	sound = event_administrative_work
+	icon = decision_politics
+
+	resources = {
+		category = decisions
+	}
+	
+	potential = {
+		is_star = yes
+		exists = space_owner
+		space_owner = { is_same_value = from }
+	}
+	
+	allow = {
+		# prevent ui duplicating
+		custom_tooltip = {
+			fail_text = "decision_system_req"
+			solar_system.starbase.fleet = { not = { has_fleet_flag = "scis_sector_shaping_system_ui_opened" } }
+		}	
+	}
+
+	effect = {
+		custom_tooltip = "decision_system_effect"
+		hidden_effect = { solar_system.starbase.fleet = { fleet_event = { id = scis_sector_shaping_system.1 } } }
+	}
+	
+	ai_weight = { weight = 0 }	
+}

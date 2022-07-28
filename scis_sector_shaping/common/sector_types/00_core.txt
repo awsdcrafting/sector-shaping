@@ -1,0 +1,37 @@
+core_sector = {
+
+	system_scores = {
+		base = 100
+
+		modifier = {
+			mult = -100
+			and = {
+				has_global_flag = scis_sector_shaping_sector_shape_on # mod on
+				or = {
+					not = { has_star_flag = scis_sector_shaping_sector_00 }
+					any_system_planet = { is_capital = yes }				
+				}
+			}
+		}
+
+	}
+
+	local_capital_scores = {
+		base = -1
+		modifier = {
+			mult = -100
+			is_capital = yes
+		}
+	}
+
+	resource_conversion_table = {
+		energy = 1
+		minerals = 1
+	}
+
+	resources = {
+		category = sector
+	}
+
+	max_jumps = 6
+}

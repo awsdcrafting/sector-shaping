@@ -1,0 +1,27 @@
+# scis_sector_shaping
+# Author: scisneromam
+# based on the IRM mod from Iyur
+# Custom graphical content
+
+spriteTypes = {
+
+	# BUTTONS # -----------------------------------------------------------------------------------
+
+	# attachment
+	spriteType = {
+		name = "GFX_scis_sector_shaping_minus"
+		texturefile = "gfx/interface/icons/custom/scis_sector_shaping_minus.dds"
+		noOfFrames = 3
+	}
+	spriteType = {
+		name = "GFX_scis_sector_shaping_plus"
+		texturefile = "gfx/interface/icons/custom/scis_sector_shaping_plus.dds"
+		noOfFrames = 3
+	}
+	spriteType = {
+		name = "GFX_scis_sector_shaping_config"
+		texturefile = "gfx/interface/icons/custom/scis_sector_shaping_config.dds"
+		noOfFrames = 3
+	}
+
+}

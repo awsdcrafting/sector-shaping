@@ -1,0 +1,272 @@
+# scis_sector_shaping
+# Author: scisneromam
+# based on the IRM mod from Iyur
+# The bunch of basic sector types
+
+@scis_sector_shaping_sector_base = -1
+@scis_sector_shaping_sector_init = -15
+@scis_sector_shaping_sector_norm = -10
+@scis_sector_shaping_sector_home = 1
+@scis_sector_shaping_sector_area = 6
+
+@scis_sector_shaping_sector_energy = 1
+@scis_sector_shaping_sector_minerals = 1
+
+# sector id#...
+scis_sector_shaping_sector_01 = {
+
+	system_scores = {
+
+		# basic
+		base = @scis_sector_shaping_sector_base
+
+		# to init
+		modifier = {
+			mult = @scis_sector_shaping_sector_init
+		 scis_sector_shaping_system_sector_init = { id = 01 }
+		}
+
+		# to include
+		modifier = {
+			mult = @scis_sector_shaping_sector_norm
+		 scis_sector_shaping_system_sector_norm = { id = 01 }
+		}
+
+	}
+
+	local_capital_scores = {
+		base = @scis_sector_shaping_sector_home
+	}
+
+	resource_conversion_table = {
+		energy = @scis_sector_shaping_sector_energy
+		minerals = @scis_sector_shaping_sector_minerals
+	}
+
+	max_jumps = @scis_sector_shaping_sector_area
+}
+
+scis_sector_shaping_sector_02 = {
+	system_scores = {
+		base = @scis_sector_shaping_sector_base
+		modifier = { mult = @scis_sector_shaping_sector_init scis_sector_shaping_system_sector_init = { id = 02 } }
+		modifier = { mult = @scis_sector_shaping_sector_norm scis_sector_shaping_system_sector_norm = { id = 02 } }
+	}
+	local_capital_scores = {
+		base = @scis_sector_shaping_sector_home
+		modifier = {
+			mult = @scis_sector_shaping_sector_base
+			owner = {
+				not = {
+					any_owned_sector = { has_sector_type = scis_sector_shaping_sector_01 }
+				}
+			}
+		}		
+	}
+	resource_conversion_table = { energy = @scis_sector_shaping_sector_energy minerals = @scis_sector_shaping_sector_minerals }
+	max_jumps = @scis_sector_shaping_sector_area
+}
+
+scis_sector_shaping_sector_03 = {
+	system_scores = {
+		base = @scis_sector_shaping_sector_base
+		modifier = { mult = @scis_sector_shaping_sector_init scis_sector_shaping_system_sector_init = { id = 03 } }
+		modifier = { mult = @scis_sector_shaping_sector_norm scis_sector_shaping_system_sector_norm = { id = 03 } }
+	}
+	local_capital_scores = {
+		base = @scis_sector_shaping_sector_home
+		modifier = {
+			mult = @scis_sector_shaping_sector_base
+			owner = {
+				nor = {
+					any_owned_sector = { has_sector_type = scis_sector_shaping_sector_01 }
+					any_owned_sector = { has_sector_type = scis_sector_shaping_sector_02 }
+				}
+			}
+		}		
+	}
+	resource_conversion_table = { energy = @scis_sector_shaping_sector_energy minerals = @scis_sector_shaping_sector_minerals }
+	max_jumps = @scis_sector_shaping_sector_area
+}
+
+scis_sector_shaping_sector_04 = {
+	system_scores = {
+		base = @scis_sector_shaping_sector_base
+		modifier = { mult = @scis_sector_shaping_sector_init scis_sector_shaping_system_sector_init = { id = 04 } }
+		modifier = { mult = @scis_sector_shaping_sector_norm scis_sector_shaping_system_sector_norm = { id = 04 } }
+	}
+	local_capital_scores = {
+		base = @scis_sector_shaping_sector_home
+		modifier = {
+			mult = @scis_sector_shaping_sector_base
+			owner = {
+				nor = {
+					any_owned_sector = { has_sector_type = scis_sector_shaping_sector_01 }
+					any_owned_sector = { has_sector_type = scis_sector_shaping_sector_02 }
+					any_owned_sector = { has_sector_type = scis_sector_shaping_sector_03 }
+				}
+			}
+		}		
+	}
+	resource_conversion_table = { energy = @scis_sector_shaping_sector_energy minerals = @scis_sector_shaping_sector_minerals }
+	max_jumps = @scis_sector_shaping_sector_area
+}
+
+scis_sector_shaping_sector_05 = {
+	system_scores = {
+		base = @scis_sector_shaping_sector_base
+		modifier = { mult = @scis_sector_shaping_sector_init scis_sector_shaping_system_sector_init = { id = 05 } }
+		modifier = { mult = @scis_sector_shaping_sector_norm scis_sector_shaping_system_sector_norm = { id = 05 } }
+	}
+	local_capital_scores = {
+		base = @scis_sector_shaping_sector_home
+		modifier = {
+			mult = @scis_sector_shaping_sector_base
+			owner = {
+				nor = {
+					any_owned_sector = { has_sector_type = scis_sector_shaping_sector_01 }
+					any_owned_sector = { has_sector_type = scis_sector_shaping_sector_02 }
+					any_owned_sector = { has_sector_type = scis_sector_shaping_sector_03 }
+					any_owned_sector = { has_sector_type = scis_sector_shaping_sector_04 }
+				}
+			}
+		}		
+	}
+	resource_conversion_table = { energy = @scis_sector_shaping_sector_energy minerals = @scis_sector_shaping_sector_minerals }
+	max_jumps = @scis_sector_shaping_sector_area
+}
+
+scis_sector_shaping_sector_06 = {
+	system_scores = {
+		base = @scis_sector_shaping_sector_base
+		modifier = { mult = @scis_sector_shaping_sector_init scis_sector_shaping_system_sector_init = { id = 06 } }
+		modifier = { mult = @scis_sector_shaping_sector_norm scis_sector_shaping_system_sector_norm = { id = 06 } }
+	}
+	local_capital_scores = {
+		base = @scis_sector_shaping_sector_home
+		modifier = {
+			mult = @scis_sector_shaping_sector_base
+			owner = {
+				nor = {
+					any_owned_sector = { has_sector_type = scis_sector_shaping_sector_01 }
+					any_owned_sector = { has_sector_type = scis_sector_shaping_sector_02 }
+					any_owned_sector = { has_sector_type = scis_sector_shaping_sector_03 }
+					any_owned_sector = { has_sector_type = scis_sector_shaping_sector_04 }
+					any_owned_sector = { has_sector_type = scis_sector_shaping_sector_05 }
+				}
+			}
+		}		
+	}
+	resource_conversion_table = { energy = @scis_sector_shaping_sector_energy minerals = @scis_sector_shaping_sector_minerals }
+	max_jumps = @scis_sector_shaping_sector_area
+}
+
+scis_sector_shaping_sector_07 = {
+	system_scores = {
+		base = @scis_sector_shaping_sector_base
+		modifier = { mult = @scis_sector_shaping_sector_init scis_sector_shaping_system_sector_init = { id = 07 } }
+		modifier = { mult = @scis_sector_shaping_sector_norm scis_sector_shaping_system_sector_norm = { id = 07 } }
+	}
+	local_capital_scores = {
+		base = @scis_sector_shaping_sector_home
+		modifier = {
+			mult = @scis_sector_shaping_sector_base
+			owner = {
+				nor = {
+					any_owned_sector = { has_sector_type = scis_sector_shaping_sector_01 }
+					any_owned_sector = { has_sector_type = scis_sector_shaping_sector_02 }
+					any_owned_sector = { has_sector_type = scis_sector_shaping_sector_03 }
+					any_owned_sector = { has_sector_type = scis_sector_shaping_sector_04 }
+					any_owned_sector = { has_sector_type = scis_sector_shaping_sector_05 }
+					any_owned_sector = { has_sector_type = scis_sector_shaping_sector_06 }
+				}
+			}
+		}		
+	}
+	resource_conversion_table = { energy = @scis_sector_shaping_sector_energy minerals = @scis_sector_shaping_sector_minerals }
+	max_jumps = @scis_sector_shaping_sector_area
+}
+
+scis_sector_shaping_sector_08 = {
+	system_scores = {
+		base = @scis_sector_shaping_sector_base
+		modifier = { mult = @scis_sector_shaping_sector_init scis_sector_shaping_system_sector_init = { id = 08 } }
+		modifier = { mult = @scis_sector_shaping_sector_norm scis_sector_shaping_system_sector_norm = { id = 08 } }
+	}
+	local_capital_scores = {
+		base = @scis_sector_shaping_sector_home
+		modifier = {
+			mult = @scis_sector_shaping_sector_base
+			owner = {
+				nor = {
+					any_owned_sector = { has_sector_type = scis_sector_shaping_sector_01 }
+					any_owned_sector = { has_sector_type = scis_sector_shaping_sector_02 }
+					any_owned_sector = { has_sector_type = scis_sector_shaping_sector_03 }
+					any_owned_sector = { has_sector_type = scis_sector_shaping_sector_04 }
+					any_owned_sector = { has_sector_type = scis_sector_shaping_sector_05 }
+					any_owned_sector = { has_sector_type = scis_sector_shaping_sector_06 }
+					any_owned_sector = { has_sector_type = scis_sector_shaping_sector_07 }
+				}
+			}
+		}		
+	}
+	resource_conversion_table = { energy = @scis_sector_shaping_sector_energy minerals = @scis_sector_shaping_sector_minerals }
+	max_jumps = @scis_sector_shaping_sector_area
+}
+
+scis_sector_shaping_sector_09 = {
+	system_scores = {
+		base = @scis_sector_shaping_sector_base
+		modifier = { mult = @scis_sector_shaping_sector_init scis_sector_shaping_system_sector_init = { id = 09 } }
+		modifier = { mult = @scis_sector_shaping_sector_norm scis_sector_shaping_system_sector_norm = { id = 09 } }
+	}
+	local_capital_scores = {
+		base = @scis_sector_shaping_sector_home
+		modifier = {
+			mult = @scis_sector_shaping_sector_base
+			owner = {
+				nor = {
+					any_owned_sector = { has_sector_type = scis_sector_shaping_sector_01 }
+					any_owned_sector = { has_sector_type = scis_sector_shaping_sector_02 }
+					any_owned_sector = { has_sector_type = scis_sector_shaping_sector_03 }
+					any_owned_sector = { has_sector_type = scis_sector_shaping_sector_04 }
+					any_owned_sector = { has_sector_type = scis_sector_shaping_sector_05 }
+					any_owned_sector = { has_sector_type = scis_sector_shaping_sector_06 }
+					any_owned_sector = { has_sector_type = scis_sector_shaping_sector_07 }
+					any_owned_sector = { has_sector_type = scis_sector_shaping_sector_08 }
+				}
+			}
+		}		
+	}
+	resource_conversion_table = { energy = @scis_sector_shaping_sector_energy minerals = @scis_sector_shaping_sector_minerals }
+	max_jumps = @scis_sector_shaping_sector_area
+}
+
+scis_sector_shaping_sector_10 = {
+	system_scores = {
+		base = @scis_sector_shaping_sector_base
+		modifier = { mult = @scis_sector_shaping_sector_init scis_sector_shaping_system_sector_init = { id = 10 } }
+		modifier = { mult = @scis_sector_shaping_sector_norm scis_sector_shaping_system_sector_norm = { id = 10 } }
+	}
+	local_capital_scores = {
+		base = @scis_sector_shaping_sector_home
+		modifier = {
+			mult = @scis_sector_shaping_sector_base
+			owner = {
+				nor = {
+					any_owned_sector = { has_sector_type = scis_sector_shaping_sector_01 }
+					any_owned_sector = { has_sector_type = scis_sector_shaping_sector_02 }
+					any_owned_sector = { has_sector_type = scis_sector_shaping_sector_03 }
+					any_owned_sector = { has_sector_type = scis_sector_shaping_sector_04 }
+					any_owned_sector = { has_sector_type = scis_sector_shaping_sector_05 }
+					any_owned_sector = { has_sector_type = scis_sector_shaping_sector_06 }
+					any_owned_sector = { has_sector_type = scis_sector_shaping_sector_07 }
+					any_owned_sector = { has_sector_type = scis_sector_shaping_sector_08 }
+					any_owned_sector = { has_sector_type = scis_sector_shaping_sector_09 }
+				}
+			}
+		}		
+	}
+	resource_conversion_table = { energy = @scis_sector_shaping_sector_energy minerals = @scis_sector_shaping_sector_minerals }
+	max_jumps = @scis_sector_shaping_sector_area
+}

@@ -1,0 +1,360 @@
+# scis_sector_shaping
+# Author: scisneromam
+# based on the IRM mod from Iyur
+# Custom system ui buttons
+
+# SYSTEM SECTOR
+
+# alert to show (while updating system)
+scis_sector_shaping_bt_system_updated = {
+	potential = {
+		exists = event_target:scis_sector_shaping_system_ui
+		event_target:scis_sector_shaping_system_ui = {
+			or = {
+				has_star_flag = scis_sector_shaping_system_updated				
+				has_star_flag = scis_sector_shaping_system_updated_ui
+			}
+		}
+	}
+	effect = { custom_tooltip = "scis_sector_shaping_ui.system_info.sector_link.ua" }
+}
+
+# sector type
+scis_sector_shaping_bt_sector_type = {
+	potential = { exists = event_target:scis_sector_shaping_system_ui }
+	effect = {
+		hidden_effect = {
+			event_target:scis_sector_shaping_system_ui = {
+				custom_tooltip = "scis_sector_shaping_ui.system_info.sector_link.th"
+				if = {
+					limit = {
+						exists = sector
+						sector = { has_sector_type = core_sector }
+					}
+					custom_tooltip = "scis_sector_shaping_ui.system_info.sector_type.tc"
+				}
+				else_if = {
+					limit = {
+						exists = sector
+						sector = { not = { has_sector_type = core_sector } }
+					}			
+					custom_tooltip = "scis_sector_shaping_ui.system_info.sector_type.tb"
+				}
+				else_if = {
+					limit = { not = { exists = sector } }			
+					custom_tooltip = "scis_sector_shaping_ui.system_info.sector_type.tf"
+				}
+				else = {
+					# ...
+				}
+			}
+		}
+	}
+}
+
+# sector attachment stance
+scis_sector_shaping_bt_system_stance = {
+	potential = { exists = event_target:scis_sector_shaping_system_ui }
+	effect = {
+		hidden_effect = {
+			custom_tooltip = "scis_sector_shaping_ui.system_info.sector_link.th"
+			if = {
+				limit = {
+					has_global_flag = scis_sector_shaping_sector_shape_on
+					event_target:scis_sector_shaping_system_ui = { exists = sector }				
+				}
+				custom_tooltip = "scis_sector_shaping_ui.system_info.sector_link.ta"
+			}
+			else_if  ={
+				limit = {
+					has_global_flag = scis_sector_shaping_sector_shape_on
+					event_target:scis_sector_shaping_system_ui = { not = { exists = sector } }				
+				}
+				custom_tooltip = "scis_sector_shaping_ui.system_info.sector_link.td"
+			}
+			else = {
+				custom_tooltip = "scis_sector_shaping_ui.system_info.sector_link.t0"
+			}	
+		}
+	}
+}
+
+# System-sector attachment options
+scis_sector_shaping_bt_system_sector_opt = {
+	potential = {
+		has_global_flag = scis_sector_shaping_sector_shape_on
+		exists = event_target:scis_sector_shaping_system_ui
+	}
+	allow = {
+		custom_tooltip = {
+			text = "scis_sector_shaping_ui.system_options.c"
+		}		
+		custom_tooltip = {
+			fail_text = "scis_sector_shaping_ui.system_leader_assign.tt.disabled"
+			has_global_flag = scis_sector_shaping_sector_shape_on
+		}		
+		custom_tooltip = {
+			fail_text = "scis_sector_shaping_ui.system_block"
+			not = { event_target:scis_sector_shaping_system_ui = { has_star_flag = scis_sector_shaping_system_opt_ui_opened } }
+		}
+		custom_tooltip = {
+			fail_text = "scis_sector_shaping_ui.system_options.x.updated"
+			not = { event_target:scis_sector_shaping_system_ui = { has_star_flag = scis_sector_shaping_system_updated_ui } }
+		}
+	}
+	effect = {
+		custom_tooltip = "scis_sector_shaping_ui.system_options.c"
+		custom_tooltip = "scis_sector_shaping_ui.system_options.c.tt"
+		hidden_effect = { event_target:scis_sector_shaping_system_ui.starbase.fleet = { fleet_event = { id = scis_sector_shaping_system_opt.1 } } }
+	}
+}
+# Options (disabled component)
+scis_sector_shaping_bt_system_sector_opt__ = {
+	potential = {
+			exists = event_target:scis_sector_shaping_system_ui
+			not = { has_global_flag = scis_sector_shaping_sector_shape_on }
+	}
+	allow = {
+		custom_tooltip = {
+			text = "scis_sector_shaping_ui.system_options.c"
+		}		
+		custom_tooltip = {
+			fail_text = "scis_sector_shaping_ui.system_leader_assign.tt.disabled"
+			always = no
+		}
+	}
+}
+
+# detach system
+scis_sector_shaping_bt_system_sector_del = {
+	potential = {
+		has_global_flag = scis_sector_shaping_sector_shape_on
+		exists = event_target:scis_sector_shaping_system_ui
+		event_target:scis_sector_shaping_system_ui = {
+			nor = {
+				has_star_flag = scis_sector_shaping_system_updated
+				has_star_flag = scis_sector_shaping_system_updated_ui
+			}
+		}
+	}
+	allow = {
+		custom_tooltip = {
+			text = "scis_sector_shaping_ui.system_options.d.title"
+		}
+		custom_tooltip = {
+			fail_text = "scis_sector_shaping_ui.system_leader_assign.tt.disabled"
+			has_global_flag = scis_sector_shaping_sector_shape_on
+		}		
+		custom_tooltip = {
+			fail_text = "scis_sector_shaping_ui.system_options.d.sector"
+			event_target:scis_sector_shaping_system_ui = { scis_sector_shaping_system_detachedable_sector = yes }
+		}
+		custom_tooltip = {
+			fail_text = "scis_sector_shaping_ui.system_options.d.capital"
+			event_target:scis_sector_shaping_system_ui = { scis_sector_shaping_system_detachedable_capital = yes }
+		}
+		custom_tooltip = {
+			fail_text = "scis_sector_shaping_ui.system_options.d.colony"
+			event_target:scis_sector_shaping_system_ui = { if = { limit = { exists = sector } scis_sector_shaping_system_detachedable_colony = yes } }
+		}
+	}
+	effect = {
+		custom_tooltip = "scis_sector_shaping_ui.system_options.d.title"
+		custom_tooltip = "scis_sector_shaping_ui.system_options.d.tt"
+		hidden_effect = {
+			event_target:scis_sector_shaping_system_ui.starbase.fleet = { fleet_event = { id = scis_sector_shaping_system_opt.11 } }
+			event_target:scis_sector_shaping_system_ui = {
+				set_timed_star_flag = { flag = scis_sector_shaping_sector_xx days = 2 }
+				set_timed_star_flag = { flag = scis_sector_shaping_system_updated days = 2 }
+				set_star_flag = scis_sector_shaping_system_updated_ui
+			}
+		}
+	}
+}
+# detach system (disabled by updating)
+scis_sector_shaping_bt_system_sector_del_ = {
+	potential = {
+		has_global_flag = scis_sector_shaping_sector_shape_on
+		exists = event_target:scis_sector_shaping_system_ui
+		event_target:scis_sector_shaping_system_ui = {
+			or = {
+				has_star_flag = scis_sector_shaping_system_updated				
+				has_star_flag = scis_sector_shaping_system_updated_ui
+			}
+		}
+	}
+	allow = {
+		custom_tooltip = {
+			text = "scis_sector_shaping_ui.system_options.d.title"
+		}		
+		custom_tooltip = {
+			fail_text = "scis_sector_shaping_ui.system_options.x.updated"
+			always = no
+		}
+	}
+}
+# detach system (disabled component)
+scis_sector_shaping_bt_system_sector_del__ = {
+	potential = {
+		exists = event_target:scis_sector_shaping_system_ui
+		not = { has_global_flag = scis_sector_shaping_sector_shape_on }
+	}
+	allow = {
+		custom_tooltip = {
+			text = "scis_sector_shaping_ui.system_options.d.title"
+		}		
+		custom_tooltip = {
+			fail_text = "scis_sector_shaping_ui.system_leader_assign.tt.disabled"
+			always = no
+		}
+	}
+}
+
+# attach system (no sector)
+scis_sector_shaping_bt_system_sector_add1 = {
+	potential = {
+		has_global_flag = scis_sector_shaping_sector_shape_on
+		exists = event_target:scis_sector_shaping_system_ui
+		event_target:scis_sector_shaping_system_ui = {
+			not = { exists = sector }
+			nor = {
+				has_star_flag = scis_sector_shaping_system_updated
+				has_star_flag = scis_sector_shaping_system_updated_ui
+			}
+		}
+	}
+	allow = {
+		custom_tooltip = {
+			text = "scis_sector_shaping_ui.system_options.a.title"
+		}
+		custom_tooltip = {
+			fail_text = "scis_sector_shaping_ui.system_leader_assign.tt.disabled"
+			has_global_flag = scis_sector_shaping_sector_shape_on
+		}			
+		custom_tooltip = {
+			fail_text = "scis_sector_shaping_ui.system_options.a.alone"
+			any_owned_sector = {
+				prev = {
+					any_system_within_border = {
+						has_hyperlane_to = event_target:scis_sector_shaping_system_ui
+						distance = { source = event_target:scis_sector_shaping_system_ui type=hyperlane min_jumps = 1 max_jumps = 1 }
+						exists = sector
+						sector = { is_same_value = prevprevprev }
+					}
+				}				
+			}
+		}		
+	}
+	effect = {
+		custom_tooltip = "scis_sector_shaping_ui.system_options.a.title"
+		custom_tooltip = "scis_sector_shaping_ui.system_options.a.tt"
+		hidden_effect = {
+			random_owned_sector = {
+				limit = {
+					prev = {
+						any_system_within_border = {
+							has_hyperlane_to = event_target:scis_sector_shaping_system_ui
+							distance = { source = event_target:scis_sector_shaping_system_ui type=hyperlane min_jumps = 1 max_jumps = 1 }
+							exists = sector
+							sector = { is_same_value = prevprevprev }
+						}
+					}							
+				}
+			 scis_sector_shaping_sector_attach_def = yes
+			}
+			event_target:scis_sector_shaping_system_ui = {
+				set_timed_star_flag = { flag = scis_sector_shaping_system_updated days = 2 }
+				set_star_flag = scis_sector_shaping_system_updated_ui					
+			}			
+		}
+	}
+}
+# attach system (sector exists)
+scis_sector_shaping_bt_system_sector_add2 = {
+	potential = {
+		has_global_flag = scis_sector_shaping_sector_shape_on
+		exists = event_target:scis_sector_shaping_system_ui
+		event_target:scis_sector_shaping_system_ui = {
+			exists = sector
+			nor = {
+				has_star_flag = scis_sector_shaping_system_updated
+				has_star_flag = scis_sector_shaping_system_updated_ui
+			}
+		}
+	}
+	allow = {
+		custom_tooltip = {
+			text = "scis_sector_shaping_ui.system_options.a.title"
+		}
+		custom_tooltip = {
+			fail_text = "scis_sector_shaping_ui.system_leader_assign.tt.disabled"
+			has_global_flag = scis_sector_shaping_sector_shape_on
+		}			
+		custom_tooltip = {
+			fail_text = "scis_sector_shaping_ui.system_options.a.sector"
+			event_target:scis_sector_shaping_system_ui = { scis_sector_shaping_system_attachedable_sector = yes }
+		}
+	}
+	effect = {
+		custom_tooltip = "scis_sector_shaping_ui.system_options.a.title"
+		custom_tooltip = "scis_sector_shaping_ui.system_options.a.tt"
+		hidden_effect = {
+			random_owned_sector = {
+				limit = {
+					prev = {
+						any_system_within_border = {
+							has_hyperlane_to = event_target:scis_sector_shaping_system_ui
+							distance = { source = event_target:scis_sector_shaping_system_ui type=hyperlane min_jumps = 1 max_jumps = 1 }
+							exists = sector
+							sector = { is_same_value = prevprevprev }
+						}
+					}							
+				}
+			 scis_sector_shaping_sector_attach_def = yes
+			}
+			event_target:scis_sector_shaping_system_ui = {
+				set_timed_star_flag = { flag = scis_sector_shaping_system_updated days = 2 }
+				set_star_flag = scis_sector_shaping_system_updated_ui					
+			}			
+		}
+	}
+}
+
+# attach system (disabled by updating)
+scis_sector_shaping_bt_system_sector_add_ = {
+	potential = {
+		has_global_flag = scis_sector_shaping_sector_shape_on
+		exists = event_target:scis_sector_shaping_system_ui
+		event_target:scis_sector_shaping_system_ui = {
+			or = {
+				has_star_flag = scis_sector_shaping_system_updated				
+				has_star_flag = scis_sector_shaping_system_updated_ui
+			}
+		}
+	}
+	allow = {
+		custom_tooltip = {
+			text = "scis_sector_shaping_ui.system_options.a.title"
+		}		
+		custom_tooltip = {
+			fail_text = "scis_sector_shaping_ui.system_options.x.updated"
+			always = no
+		}
+	}
+}
+# detach system (disabled component)
+scis_sector_shaping_bt_system_sector_add__ = {
+	potential = {
+		exists = event_target:scis_sector_shaping_system_ui
+		not = { has_global_flag = scis_sector_shaping_sector_shape_on }
+	}
+	allow = {
+		custom_tooltip = {
+			text = "scis_sector_shaping_ui.system_options.a.title"
+		}		
+		custom_tooltip = {
+			fail_text = "scis_sector_shaping_ui.system_leader_assign.tt.disabled"
+			always = no
+		}
+	}
+}

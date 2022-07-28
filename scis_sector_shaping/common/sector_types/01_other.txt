@@ -1,0 +1,31 @@
+
+# Disable default sector
+normal_sector = {
+
+	system_scores = {
+		base = 1
+
+		modifier = {
+			mult = -1
+			has_global_flag = scis_sector_shaping_sector_shape_on
+		}
+
+	}
+
+	local_capital_scores = {
+		base = 1
+
+		modifier = {
+			mult = -1
+			has_global_flag = scis_sector_shaping_sector_shape_on
+		}
+
+	}
+
+	resource_conversion_table = {
+		energy = 1
+		minerals = 1
+	}
+
+	max_jumps = 4 #
+}

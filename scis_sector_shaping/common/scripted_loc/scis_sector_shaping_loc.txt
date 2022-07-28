@@ -1,0 +1,213 @@
+# scis_sector_shaping
+# Author: scisneromam
+# based on the IRM mod from Iyur
+# Some localisation routines
+
+# This = Fleet
+defined_text = {
+	name = GetSectorType
+	text = {
+		trigger = { exists = event_target:scis_sector_shaping_system_ui.sector event_target:scis_sector_shaping_system_ui.sector = { has_sector_type = core_sector } }
+		localization_key = "core_sector"
+	}
+	text = {
+		trigger = { exists = event_target:scis_sector_shaping_system_ui.sector event_target:scis_sector_shaping_system_ui.sector = { not = { has_sector_type = core_sector } } }
+		localization_key = "scis_sector_shaping_base_sector"
+	}
+	text = {
+		trigger = { not = { exists = event_target:scis_sector_shaping_system_ui.sector } }
+		localization_key = "scis_sector_shaping_no_sector"
+	}
+}
+defined_text = {
+	name = GetSectorType_01
+	text = {
+		trigger = { exists = event_target:scis_sector_shaping_sector_ui_01 event_target:scis_sector_shaping_sector_ui_01 = { has_leader_flag = scis_sector_shaping_core_sector } }
+		localization_key = "core_sector"
+	}
+	text = {
+		trigger = { exists = event_target:scis_sector_shaping_sector_ui_01 event_target:scis_sector_shaping_sector_ui_01 = { has_leader_flag = scis_sector_shaping_base_sector } }
+		localization_key = "scis_sector_shaping_base_sector"
+	}
+}
+defined_text = {
+	name = GetSectorType_02
+	text = {
+		trigger = { exists = event_target:scis_sector_shaping_sector_ui_02 event_target:scis_sector_shaping_sector_ui_02 = { has_leader_flag = scis_sector_shaping_core_sector } }
+		localization_key = "core_sector"
+	}
+	text = {
+		trigger = { exists = event_target:scis_sector_shaping_sector_ui_02 event_target:scis_sector_shaping_sector_ui_02 = { has_leader_flag = scis_sector_shaping_base_sector } }
+		localization_key = "scis_sector_shaping_base_sector"
+	}
+}
+defined_text = {
+	name = GetSectorType_03
+	text = {
+		trigger = { exists = event_target:scis_sector_shaping_sector_ui_03 event_target:scis_sector_shaping_sector_ui_03 = { has_leader_flag = scis_sector_shaping_core_sector } }
+		localization_key = "core_sector"
+	}
+	text = {
+		trigger = { exists = event_target:scis_sector_shaping_sector_ui_03 event_target:scis_sector_shaping_sector_ui_03 = { has_leader_flag = scis_sector_shaping_base_sector } }
+		localization_key = "scis_sector_shaping_base_sector"
+	}
+}
+defined_text = {
+	name = GetSectorType_04
+	text = {
+		trigger = { exists = event_target:scis_sector_shaping_sector_ui_04 event_target:scis_sector_shaping_sector_ui_04 = { has_leader_flag = scis_sector_shaping_core_sector } }
+		localization_key = "core_sector"
+	}
+	text = {
+		trigger = { exists = event_target:scis_sector_shaping_sector_ui_04 event_target:scis_sector_shaping_sector_ui_04 = { has_leader_flag = scis_sector_shaping_base_sector } }
+		localization_key = "scis_sector_shaping_base_sector"
+	}
+}
+defined_text = {
+	name = GetSectorType_05
+	text = {
+		trigger = { exists = event_target:scis_sector_shaping_sector_ui_05 event_target:scis_sector_shaping_sector_ui_05 = { has_leader_flag = scis_sector_shaping_core_sector } }
+		localization_key = "core_sector"
+	}
+	text = {
+		trigger = { exists = event_target:scis_sector_shaping_sector_ui_05 event_target:scis_sector_shaping_sector_ui_05 = { has_leader_flag = scis_sector_shaping_base_sector } }
+		localization_key = "scis_sector_shaping_base_sector"
+	}
+}
+
+# Root = Fleet
+# Defines attachment stance for system
+defined_text = {
+	name = GetSystemStance
+	text = {
+		trigger = {
+			has_global_flag = scis_sector_shaping_sector_shape_on
+			event_target:scis_sector_shaping_system_ui = { has_star_flag = scis_sector_shaping_system_changed }
+		}
+		localization_key = "scis_sector_shaping_ui.system_info.sector_link.u"
+	}
+	text = {
+		trigger = {
+			has_global_flag = scis_sector_shaping_sector_shape_on
+			event_target:scis_sector_shaping_system_ui = { not = { has_star_flag = scis_sector_shaping_system_changed } exists = sector }
+		}
+		localization_key = "scis_sector_shaping_ui.system_info.sector_link.a"
+	}
+	text = {
+		trigger = {
+			has_global_flag = scis_sector_shaping_sector_shape_on
+			event_target:scis_sector_shaping_system_ui = { not = { has_star_flag = scis_sector_shaping_system_changed } not = { exists = sector } }
+		}
+		localization_key = "scis_sector_shaping_ui.system_info.sector_link.d"
+	}
+	text = {
+		trigger = {
+			not = { has_global_flag = scis_sector_shaping_sector_shape_on }
+		}
+		localization_key = "scis_sector_shaping_ui.system_info.sector_link.0"
+	}
+}
+
+# Root = Fleet
+# Icon to show the possibility of detachment
+defined_text = {
+	name = GetSystemDetach
+	text = {
+		trigger = {
+			exists = event_target:scis_sector_shaping_system_ui
+			event_target:scis_sector_shaping_system_ui = {
+				or = {
+				 scis_sector_shaping_system_detachedable_sector = no
+				 scis_sector_shaping_system_detachedable_capital = no
+				 scis_sector_shaping_system_detachedable_colony = no
+				}
+			}
+		}
+		localization_key = "scis_sector_shaping_dot_red"
+	}
+	text = {
+		trigger = {
+			exists = event_target:scis_sector_shaping_system_ui
+			event_target:scis_sector_shaping_system_ui = {
+				and = {
+				 scis_sector_shaping_system_detachedable_sector = yes
+				 scis_sector_shaping_system_detachedable_capital = yes
+					if = { limit = { exists = sector } scis_sector_shaping_system_detachedable_colony = yes }
+				}
+			}
+		}
+		localization_key = "scis_sector_shaping_dot_green"
+	}
+}
+
+# Root = Fleet
+# Icon to show the possibility of attachment (for existing sector)
+defined_text = {
+	name = GetSystemAttach0
+	text = {
+		trigger = {
+			exists = event_target:scis_sector_shaping_system_ui
+			event_target:scis_sector_shaping_system_ui = {
+				or = {
+				 scis_sector_shaping_system_attachedable_sector = no
+				}
+			}
+		}
+		localization_key = "scis_sector_shaping_dot_red"
+	}
+	text = {
+		trigger = {
+			exists = event_target:scis_sector_shaping_system_ui
+			event_target:scis_sector_shaping_system_ui = {
+				and = {
+				 scis_sector_shaping_system_attachedable_sector = yes
+				}
+			}
+		}
+		localization_key = "scis_sector_shaping_dot_green"
+	}
+}
+
+# Root = Fleet
+# Icon to show the possibility of detachment
+defined_text = {
+	name = GetSystemAttachX
+	text = {
+		trigger = {
+			exists = event_target:scis_sector_shaping_system_ui
+			not = { any_system_planet = { is_colony = yes } }
+		}
+		localization_key = "scis_sector_shaping_dot_green"
+	}
+	text = {
+		trigger = {
+			exists = event_target:scis_sector_shaping_system_ui
+
+			if = {
+				limit = { any_system_planet = { is_colony = yes } }
+					event_target:scis_sector_shaping_system_ui = {
+						and = {
+						 scis_sector_shaping_system_detachedable_capital = no
+						 scis_sector_shaping_system_detachedable_colony = no
+						}
+					}				
+			}
+		}
+		localization_key = "scis_sector_shaping_dot_green"
+	}		
+	text = {
+		trigger = {
+			exists = event_target:scis_sector_shaping_system_ui
+			if = {
+				limit = { any_system_planet = { is_colony = yes } }
+					event_target:scis_sector_shaping_system_ui = {
+						or = {
+						 scis_sector_shaping_system_detachedable_capital = no
+						 scis_sector_shaping_system_detachedable_colony = no
+						}
+					}				
+			}
+		}
+		localization_key = "scis_sector_shaping_dot_red"
+	}
+}

@@ -1,0 +1,38 @@
+# scis_sector_shaping
+# Author: scisneromam
+# based on the IRM mod from Iyur
+# The core event file, operates with system feature
+namespace = scis_sector_shaping
+# This = No Scope
+# Core mod initilization.
+# Launches from the beginning or is checked every month.
+event = {
+	id = scis_sector_shaping.1
+	hide_window = yes
+	is_triggered_only = yes
+	trigger = {
+		# runs if some modules aren't defined
+	 scis_sector_shaping_is_defined = no
+	}
+	immediate = {
+		# initialize all modules
+	 scis_sector_shaping_init_modules = yes
+	}
+}
+
+# scis_sector_shaping.4 - yearly
+# This = Country
+# UI screen to define mod key settings
+country_event = {
+	id = scis_sector_shaping.91
+	is_triggered_only = yes
+	title = "scis_sector_shaping_ui.setup_title"
+	desc = "scis_sector_shaping_ui.setup_title"
+	diplomatic = yes
+	custom_gui = "scis_sector_shaping_setup_window"
+	immediate = {
+	}
+	option = {
+		name = "ok"
+	}
+}

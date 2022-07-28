@@ -1,0 +1,174 @@
+# scis_sector_shaping
+# Author: scisneromam
+# based on the IRM mod from Iyur
+
+guiTypes = {
+
+	# Mod setup window
+
+	@scr_Xo = 10
+
+	containerWindowType = {
+		name = "scis_sector_shaping_setup_window"
+		orientation = upper_left
+		size = { width = 590 height = 250 }
+		moveable = yes
+		position = { x = 300 y = 200 }
+		clipping = no
+
+		background = { name = "background" quadTextureSprite ="GFX_tile_outliner_bg" }
+		iconType = { name = "hex_bg" spriteType = "GFX_hex_bg" position = { x = -10 y = -14 } }
+		iconType = { name = "empire_header_line" quadTextureSprite = "GFX_line" position = { x = 6 y = 22 } }
+		
+		buttonType = {
+			name = "focus_button"
+			position = { x = -80 y = 12 }
+			orientation = "UPPER_RIGHT"
+			spriteType = "GFX_fleetview_focus"
+			buttonFont = "cg_16b"
+			shortcut = "q"
+		}
+		
+		buttonType = {
+			name = "close"
+			quadTextureSprite = "GFX_close"
+			position = { x= -44 y = 12 }
+			Orientation = "UPPER_RIGHT"
+			shortcut = "ESCAPE"
+			clicksound = "back_click"
+			actionShortcut = "cancel"
+		}
+
+		# Title
+		instantTextBoxType = { name = "alien_message" position = { x = 14 y = 4 } font = "malgun_goth_24" alwaysTransparent = yes }
+		
+		# Settings block
+		containerWindowType = {
+			name = "settings"
+			orientation = upper_left
+			position = { x = @scr_Xo y = 50 }
+			clipping = no
+
+			# major settings
+			instantTextBoxType = {
+				name = "major"
+				position = { x = 5 y = 0 }
+				alwaysTransparent = yes
+				format = left
+				font = "cg_16b"
+				text = "Primary Modules"
+			}
+
+			# minor settings
+			instantTextBoxType = {
+				name = "minor"
+				position = { x = 295 y = 0 }
+				alwaysTransparent = yes
+				format = left
+				font = "cg_16b"
+				text = "Secondary Modules"
+			}
+
+			containerWindowType = {
+				name = "settings_primary"
+				orientation = upper_left
+				position = { x = 0 y = 20 }
+				clipping = no
+
+				@row_Xo2 = 290
+				@row_Yo = 10
+				@row_Yo2 = 45
+				@row_W = 280
+				@row_H = 30
+
+				@txt_Xo = 40
+				@txt_Yo = 7
+
+
+				containerWindowType = {
+					name = "mod_sector_shape"
+					position = { x = 0 y = @row_Yo2 }
+					size = { width = @row_W height = @row_H }
+					background = { name = "bg" spriteType = "GFX_black_box_bg" pdx_tooltip = "scis_sector_shaping_ui.setup_mod.sector_shape.desc" }				
+				
+					effectButtonType = {
+						name = "on"
+						position = { x = 0 y = 0 }
+						quadTextureSprite = "GFX_checkbox_20_20_01"
+						effect = "scis_sector_shaping_cb_sector_shape_on"
+						frame = 2
+					}
+					effectButtonType = {
+						name = "off"
+						position = { x = 0 y = 0 }
+						quadTextureSprite = "GFX_checkbox_20_20_01"
+						effect = "scis_sector_shaping_cb_sector_shape_off"
+					}
+					instantTextBoxType = {
+						name = "txt"
+						position = { x = @txt_Xo y = @txt_Yo }
+						maxWidth = @row_W
+						alwaysTransparent = yes
+						text_color_code = "E"				
+						format = left
+						font = "cg_16b"
+						text = "scis_sector_shaping_ui.setup_mod.sector_shape"
+					}					
+				
+				}
+
+			}
+
+		}
+
+		### HIDE
+			instantTextBoxType = { name = "heading" font = "cg_16b" position = { x = -1000 y = -1000 } }
+			buttonType = { name = "alien_message_background" position = { x = -1000 y = -1000 } spriteType = "GFX_tiles_dark_area_cut_8" }
+			buttonType = { name = "confirm_button" quadTextureSprite = "GFX_standard_button_142_34_button" position = { x= -1000 y = -1000  } font = "cg_16b" }
+			iconType = { name = "empire_info_bg" spriteType = "GFX_diplomacy_dark_fade_bg" position = { x = -1000 y = -1000 } }
+			instantTextBoxType = { name = "empire_name" font = "malgun_goth_24" position = { x = -1000 y = -1000 } }
+			instantTextBoxType={ name = "empire_government_type" font = "cg_16b" position = { x = -1000 y = -1000 } }
+			instantTextBoxType = { name = "empire_personality_type" font = "cg_16b" position = { x = -1000 y = -1000 } }
+			OverlappingElementsBoxType = { name = "empire_ethics_icons" position = { x = -1000 y = -1000 } }
+			buttonType = { name = "empire_flag" quadTextureSprite = "GFX_empire_flag_128" position = { x = -1000 y = -1000 } }
+			containerWindowType = {
+				name = "leader_details"
+				position = { x = -1000 y = -1000 }
+				containerWindowType = { name = "empire_traits_box" background = { name = "ethics_bg" spriteType = "GFX_tiles_dark_area_cut_8" } }
+				instantTextBoxType = { name = "empire_traits_label" font = "cg_16b" }
+				overlappingElementsBoxType = { name = "leader_traits" }
+				instantTextBoxType = { name = "leader_name" font = "cg_16b" }
+				instantTextBoxType = { name = "leader_species" font = "cg_16b" }
+			}
+			containerWindowType = {
+				name = "opinion_window"
+				position = { x = -1000 y = -1000 }
+				background = { name = "opinion_bg" spriteType = "GFX_tiled_window_transparent" }
+				iconType = { name = "their_opinion_icon" spriteType = "GFX_diplomacy_opinion" }
+				instantTextBoxType = { name = "their_opinion" font = "cg_16b" }
+			}
+
+		### /
+		
+		### EVENT DIPLO ###
+		
+		containerWindowType = {
+			name = "EVENT_DIPLO"
+			position = { x = -1110 y = -250 }
+			moveable = no
+			
+			# Title
+			instantTextBoxType = { name = "action_title" font = "malgun_goth_24" position = { x = -1120 y = -1147 } }
+			instantTextBoxType = { name = "action_desc"  font = "malgun_goth_24" position = { x = -1120 y = -1147 } }
+			
+			listboxType = {
+				name = "option_list"
+				position = { x = 0 y = 0 }
+				size = { x=10 y=400 }
+				Orientation = "UPPER_LEFT"
+				alwaysTransparent = yes
+			}
+		}
+
+	}
+}

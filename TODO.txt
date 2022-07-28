@@ -1,0 +1,9 @@
+Unlimit sector count:
+	check if sector to attach to is same as star flag
+
+Auto size:
+	check if distance is smaller/equal than country var
+		yes -> attach to sektor
+
+Multiplayer compat:
+	remove global flags

@@ -1,0 +1,77 @@
+# scis_sector_shaping
+# Author: scisneromam
+# based on the IRM mod from Iyur
+# Mod custom effects
+
+# ANY # -------------------------------------------------------------------------------------------
+# This = Any
+# Initializes all mod components.
+scis_sector_shaping_init_modules = {
+	# base
+	if = {
+		limit = {
+			not = {
+				has_global_flag = scis_sector_shaping_on
+			}
+		}
+		set_global_flag = scis_sector_shaping_on
+		log = "scis_sector_shaping: on"
+	}
+	# sector shape
+	if = {
+		limit = {
+			nor = {
+				has_global_flag = scis_sector_shaping_sector_shape_on
+				has_global_flag = scis_sector_shaping_sector_shape_off
+			}
+		}
+	 scis_sector_shaping_enable_sector_shape = yes
+	}
+}
+
+#	^ This = Country
+# On/off sector shape features
+scis_sector_shaping_enable_sector_shape = {
+	remove_global_flag = scis_sector_shaping_sector_shape_off
+	set_global_flag = scis_sector_shaping_sector_shape_on
+	log = "scis_sector_shaping: sector_shape enabled"
+}
+
+scis_sector_shaping_disable_sector_shape = {
+	remove_global_flag = scis_sector_shaping_sector_shape_on
+	set_global_flag = scis_sector_shaping_sector_shape_off
+	log = "scis_sector_shaping: sector_shape disabled"
+}
+
+# This = Any
+# $stTarget$ : string : name of the target scope
+# Clears chosen global target
+scis_sector_shaping_clear_target = {
+	if = {
+		# system scope
+		limit = {
+			exists = event_target:$stTarget$
+		}
+		clear_global_event_target = $stTarget$
+	}
+}
+
+# This = Any
+# $stDummy$ : string : name of the target scope
+# Physically deletes dummy scope
+scis_sector_shaping_delete_dummy = {
+	if = {
+		limit = {
+			exists = event_target:$stDummy$
+		}
+		event_target:$stDummy$ = {
+			[[clear]scis_sector_shaping_clear_target = {
+				stTarget = $stDummy$
+			}
+			]
+			kill_leader = {
+				show_notification = no
+			}
+		}
+	}
+}

@@ -1,0 +1,133 @@
+# scis_sector_shaping
+# Author: scisneromam
+# based on the IRM mod from Iyur
+# Mod system events
+namespace = scis_sector_shaping_system
+# This = Fleet (From Starbase)
+# Opens system management screen
+fleet_event = {
+	id = scis_sector_shaping_system.1
+	title = "scis_sector_shaping_ui.system_title"
+	desc = "l14"
+	location = root.solar_system
+	show_sound = event_conversation
+	is_triggered_only = yes
+	diplomatic = yes
+	custom_gui = "scis_sector_shaping_system_window"
+
+	picture_event_data = {
+		portrait = root.owner.leader
+	}
+
+	# general estimations
+	immediate = {
+		# inform ui, that window is opend
+		set_fleet_flag = scis_sector_shaping_system_ui_opened
+		# system
+		solar_system = {
+			# save system scope for ui reasons
+			save_global_event_target_as = scis_sector_shaping_system_ui
+		}
+		# make a dummy leader to translate sector name, if exists
+		if = {
+			limit = {
+				exists = sector
+			}
+			owner = {
+				create_saved_leader = {
+					creator = this
+					species = this.species
+
+					effect = {
+						set_name = event_target:scis_sector_shaping_system_ui.sector
+						save_global_event_target_as = scis_sector_shaping_system_ui_sector
+					}
+				}
+			}
+		}
+	}
+	# damn options as vars...
+	# close
+	option = {
+		name = "sp1"
+		custom_gui = "scis_sector_shaping_system_op_close"
+	}
+	# refresh window
+	option = {
+		name = "sp1"
+		custom_gui = "scis_sector_shaping_system_op_refresh"
+		hidden_effect = {
+			set_timed_fleet_flag = {
+				flag = "scis_sector_shaping_system_ui_reopen"
+				days = 1
+			}
+		}
+	}
+	# system types
+	option = {
+		name = "scis_sector_shaping_ui.system_type"
+		custom_gui = "scis_sector_shaping_system_op_type"
+	}
+	
+	# SECTOR
+	option = {
+		name = "scis_sector_shaping_ui.system_info.sector_name"
+		custom_gui = "scis_sector_shaping_system_op_sector_name"
+		trigger = {
+			exists = solar_system.sector
+		}
+	}
+	option = {
+		name = "scis_sector_shaping_ui.system_info.sector_name.n"
+		custom_gui = "scis_sector_shaping_system_op_sector_name"
+		trigger = {
+			not = {
+				exists = solar_system.sector
+			}
+		}
+	}
+	option = {
+		name = "scis_sector_shaping_ui.system_info.sector_type"
+		custom_gui = "scis_sector_shaping_system_op_sector_type"
+	}
+	option = {
+		name = "scis_sector_shaping_ui.system_info.sector_link"
+		custom_gui = "scis_sector_shaping_system_op_sector_link"
+	}
+	# to prevent disappearing of all options
+	option = {
+		name = "sp1"
+		custom_gui = "scis_sector_shaping_system_op_dummy"
+	}
+	# silently clean up everything
+	after = {
+		hidden_effect = {
+			# remove temp flags
+			remove_fleet_flag = scis_sector_shaping_system_ui_opened
+			solar_system = {
+				remove_star_flag = scis_sector_shaping_system_updated_ui
+			 scis_sector_shaping_system_remove_types = yes
+			}
+			# delete dummies
+			#scis_sector_shaping_delete_dummy = { stDummy = scis_sector_shaping_system_ui_type }
+			# clear targets
+		 scis_sector_shaping_clear_target = {
+				stTarget = scis_sector_shaping_system_ui
+			}
+		 scis_sector_shaping_clear_target = {
+				stTarget = scis_sector_shaping_system_ui_sector
+			}
+			# remove vars
+			# check necessarity for reopen
+			if = {
+				limit = {
+					has_fleet_flag = "scis_sector_shaping_system_ui_reopen"
+				}
+				remove_fleet_flag = "scis_sector_shaping_system_ui_reopen"
+				fleet_event = {
+					id = scis_sector_shaping_system.1
+				}
+			}
+		}
+	}
+}

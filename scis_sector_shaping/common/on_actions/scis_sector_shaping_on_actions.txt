@@ -1,0 +1,18 @@
+# scis_sector_shaping
+# Author: scisneromam
+# based on the IRM mod from Iyur
+# Key triggers for events
+
+# Triggers when the game starts
+on_game_start = {
+	events = {
+	 scis_sector_shaping.1 # initialization
+	}
+}
+
+# No scope, like on_game_start
+on_monthly_pulse = {
+	events = {
+	 scis_sector_shaping.1 # initialization
+	}
+}

@@ -1,0 +1,72 @@
+# scis_sector_shaping
+# Author: scisneromam
+# based on the IRM mod from Iyur
+# Mod custom triggers
+# ANY # -------------------------------------------------------------------------------------------
+# This = Any
+# Checks if all mod components are defined
+scis_sector_shaping_is_defined = {
+	and = {
+		has_global_flag = scis_sector_shaping_on
+		or = {
+			# sector shape
+			has_global_flag = scis_sector_shaping_sector_shape_on
+			has_global_flag = scis_sector_shaping_sector_shape_off
+		}
+	}
+}
+
+### SECTOR ----------------------------------------------------------------------------------------
+# This = Sector
+# Root = Fleet
+scis_sector_shaping_sector_is_neighbor = {
+	owner = {
+		any_system_within_border = {
+			has_hyperlane_to = root.solar_system
+			distance = {
+				source = root.solar_system
+				type = hyperlane
+				min_jumps = 1
+				max_jumps = 1
+			}
+			exists = sector
+			sector = {
+				is_same_value = prevprevprev
+				not = {
+					is_same_value = root.solar_system.sector
+				}
+			}
+		}
+	}
+}
+
+scis_sector_shaping_system_sector_init = {
+	nand = {
+		has_global_flag = scis_sector_shaping_sector_shape_on		# mod on
+		any_system_planet = {
+			is_colony = yes
+		}
+		not = {
+			owner = {
+				any_owned_sector = {
+					has_sector_type = scis_sector_shaping_sector_$id$
+				}
+			}
+		}
+		not = {
+			has_star_flag = scis_sector_shaping_sector_xx
+		}
+	}
+}
+
+scis_sector_shaping_system_sector_norm = {
+	nand = {
+		has_global_flag = scis_sector_shaping_sector_shape_on
+		has_star_flag = scis_sector_shaping_sector_$id$
+		owner = {
+			any_owned_sector = {
+				has_sector_type = scis_sector_shaping_sector_$id$
+			}
+		}
+	}
+}

@@ -1,0 +1,26 @@
+# scis_sector_shaping
+# Author: scisneromam
+# based on the IRM mod from Iyur
+# Custom ui buttons
+
+# Mod - sector shape
+scis_sector_shaping_cb_sector_shape_on = {
+	potential = {
+		has_global_flag = scis_sector_shaping_sector_shape_on
+	}
+	effect = {
+		custom_tooltip = "scis_sector_shaping_ui.setup_mod.sector_shape.desc"
+		custom_tooltip = "scis_sector_shaping_ui.setup_mod.disable"
+		hidden_effect = { scis_sector_shaping_disable_sector_shape = yes }
+	}
+}
+scis_sector_shaping_cb_sector_shape_off = {
+	potential = {
+		not = { has_global_flag = scis_sector_shaping_sector_shape_on }
+	}
+	effect = {
+		custom_tooltip = "scis_sector_shaping_ui.setup_mod.sector_shape.desc"
+		custom_tooltip = "scis_sector_shaping_ui.setup_mod.enable"
+		hidden_effect = { scis_sector_shaping_enable_sector_shape = yes }
+	}
+}

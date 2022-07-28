@@ -1,0 +1,148 @@
+# scis_sector_shaping
+# Author: scisneromam
+# based on the IRM mod from Iyur
+# Mod custom effects
+
+
+# UI
+
+# This = Sector
+# Saves neighbor sector scopes, to show them as options later
+scis_sector_shaping_sector_to_list = {
+
+	if = {
+		limit = { not = { exists = event_target:scis_sector_shaping_sector_ui_01 } }
+	 scis_sector_shaping_sector_to_scope = { id = "01" }
+	}
+	else_if = {
+		limit = { not = { exists = event_target:scis_sector_shaping_sector_ui_02 } }
+	 scis_sector_shaping_sector_to_scope = { id = "02" }
+	}
+	else_if = {
+		limit = { not = { exists = event_target:scis_sector_shaping_sector_ui_03 } }
+	 scis_sector_shaping_sector_to_scope = { id = "03" }
+	}
+	else_if = {
+		limit = { not = { exists = event_target:scis_sector_shaping_sector_ui_04 } }
+	 scis_sector_shaping_sector_to_scope = { id = "04" }
+	}
+	else_if = {
+		limit = { not = { exists = event_target:scis_sector_shaping_sector_ui_05 } }
+	 scis_sector_shaping_sector_to_scope = { id = "05" }
+	}
+
+}
+
+# This = Sector
+# While there is a bug with sector names, we have to use a dummu leader as a nameholder.
+scis_sector_shaping_sector_to_scope = {
+	owner = {
+		create_saved_leader = {
+			creator = this
+			species = this.species
+			event_leader = yes
+			effect = { save_event_target_as = scis_sector_shaping_sector_ui_$id$ }
+		}
+		# fu**ing workaround to take sector's name
+		random_system_within_border = {
+			limit = {
+				exists = sector
+				sector =  { is_same_value = prevprevprev }
+			}
+			event_target:scis_sector_shaping_sector_ui_$id$ = {
+				set_name = prev.sector
+				if = {
+					limit = { prev.sector = { has_sector_type = core_sector } }
+						set_leader_flag = scis_sector_shaping_core_sector
+				}
+				else = { set_leader_flag = scis_sector_shaping_base_sector }
+				set_leader_flag = scis_sector_shaping_sector_ui_@prev.sector
+			}
+		}		
+	}	
+}
+
+# This = System
+# Prev = Fleet
+# Sets a special flag to increase weight for sector.
+scis_sector_shaping_system_attach_to = {
+ scis_sector_shaping_system_attach_del = yes
+	owner = {
+		random_owned_sector = {
+			limit = { event_target:scis_sector_shaping_sector_ui_$id$ = { has_leader_flag = scis_sector_shaping_sector_ui_@prev } }
+		 scis_sector_shaping_sector_attach_def = yes
+		}
+	}
+	# if sector exists, we have to reset ownership to redraw sectors
+	if = {
+		limit = { exists = sector }
+			starbase.fleet = { fleet_event = { id = scis_sector_shaping_system_opt.11 } }
+	}
+	set_timed_star_flag = { flag = scis_sector_shaping_system_updated days = 2 }
+	set_star_flag = scis_sector_shaping_system_updated_ui
+}
+
+# Just ensure there is no attachment flags
+scis_sector_shaping_system_attach_del = {
+	remove_star_flag = scis_sector_shaping_sector_00
+	remove_star_flag = scis_sector_shaping_sector_01
+	remove_star_flag = scis_sector_shaping_sector_02
+	remove_star_flag = scis_sector_shaping_sector_03
+	remove_star_flag = scis_sector_shaping_sector_04
+	remove_star_flag = scis_sector_shaping_sector_05
+	remove_star_flag = scis_sector_shaping_sector_06
+	remove_star_flag = scis_sector_shaping_sector_07
+	remove_star_flag = scis_sector_shaping_sector_08
+	remove_star_flag = scis_sector_shaping_sector_09
+	remove_star_flag = scis_sector_shaping_sector_10
+}
+
+# This = Sector
+# Adds flag according to sector type
+@scis_sector_shaping_attach_duration = 3
+scis_sector_shaping_sector_attach_def = {
+	if = {
+		limit = { has_sector_type = core_sector }
+			event_target:scis_sector_shaping_system_ui = { set_timed_star_flag = { flag = scis_sector_shaping_sector_00 days = @scis_sector_shaping_attach_duration } }
+	}
+	else_if = {
+		limit = { has_sector_type = scis_sector_shaping_sector_01 }
+			event_target:scis_sector_shaping_system_ui = { set_timed_star_flag = { flag = scis_sector_shaping_sector_01 days = @scis_sector_shaping_attach_duration } }
+	}
+	else_if = {
+		limit = { has_sector_type = scis_sector_shaping_sector_02 }
+			event_target:scis_sector_shaping_system_ui = { set_timed_star_flag = { flag = scis_sector_shaping_sector_02 days = @scis_sector_shaping_attach_duration } }
+	}
+	else_if = {
+		limit = { has_sector_type = scis_sector_shaping_sector_03 }
+			event_target:scis_sector_shaping_system_ui = { set_timed_star_flag = { flag = scis_sector_shaping_sector_03 days = @scis_sector_shaping_attach_duration } }
+	}
+	else_if = {
+		limit = { has_sector_type = scis_sector_shaping_sector_04 }
+			event_target:scis_sector_shaping_system_ui = { set_timed_star_flag = { flag = scis_sector_shaping_sector_04 days = @scis_sector_shaping_attach_duration } }
+	}
+	else_if = {
+		limit = { has_sector_type = scis_sector_shaping_sector_05 }
+			event_target:scis_sector_shaping_system_ui = { set_timed_star_flag = { flag = scis_sector_shaping_sector_05 days = @scis_sector_shaping_attach_duration } }
+	}
+	else_if = {
+		limit = { has_sector_type = scis_sector_shaping_sector_06 }
+			event_target:scis_sector_shaping_system_ui = { set_timed_star_flag = { flag = scis_sector_shaping_sector_06 days = @scis_sector_shaping_attach_duration } }
+	}
+	else_if = {
+		limit = { has_sector_type = scis_sector_shaping_sector_07 }
+			event_target:scis_sector_shaping_system_ui = { set_timed_star_flag = { flag = scis_sector_shaping_sector_07 days = @scis_sector_shaping_attach_duration } }
+	}
+	else_if = {
+		limit = { has_sector_type = scis_sector_shaping_sector_08 }
+			event_target:scis_sector_shaping_system_ui = { set_timed_star_flag = { flag = scis_sector_shaping_sector_08 days = @scis_sector_shaping_attach_duration } }
+	}
+	else_if = {
+		limit = { has_sector_type = scis_sector_shaping_sector_09 }
+			event_target:scis_sector_shaping_system_ui = { set_timed_star_flag = { flag = scis_sector_shaping_sector_09 days = @scis_sector_shaping_attach_duration } }
+	}
+	else_if = {
+		limit = { has_sector_type = scis_sector_shaping_sector_10 }
+			event_target:scis_sector_shaping_system_ui = { set_timed_star_flag = { flag = scis_sector_shaping_sector_10 days = @scis_sector_shaping_attach_duration } }
+	}	
+}

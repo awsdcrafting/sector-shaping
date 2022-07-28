@@ -1,0 +1,383 @@
+# scis_sector_shaping
+# Author: scisneromam
+# based on the IRM mod from Iyur
+# Mod system options
+namespace = scis_sector_shaping_system_opt
+# This = Fleet
+# From = Starbase
+# Opens system management screen
+fleet_event = {
+	id = scis_sector_shaping_system_opt.1
+	title = "scis_sector_shaping_ui.system_options.desc"
+	desc = "scis_sector_shaping_ui.system_options.attachment"
+	location = root.solar_system
+	#show_sound = event_conversation
+	is_triggered_only = yes
+	diplomatic = yes
+	custom_gui = "scis_sector_shaping_system_opt_window"
+	immediate = {
+		# temp flag
+		solar_system = {
+			set_star_flag = scis_sector_shaping_system_opt_ui_opened
+		}
+		# gather all infor about surrounding sectors
+		owner = {
+			while = {
+				limit = {
+					any_owned_sector = {
+					 scis_sector_shaping_sector_is_neighbor = yes
+						root.solar_system = {
+							not = {
+								has_star_flag = scis_sector_shaping_sector_ui_@prev
+							}
+						}
+					}
+				}
+				random_owned_sector = {
+					limit = {
+					 scis_sector_shaping_sector_is_neighbor = yes
+						root.solar_system = {
+							not = {
+								has_star_flag = scis_sector_shaping_sector_ui_@prev
+							}
+						}
+					}
+				 scis_sector_shaping_sector_to_list = yes
+					root.solar_system = {
+						set_timed_star_flag = {
+							flag = scis_sector_shaping_sector_ui_@prev
+							days = 1
+						}
+					}
+				}
+			}
+			# ensure all flags are cleared
+			every_owned_sector = {
+				root.solar_system = {
+					remove_star_flag = scis_sector_shaping_sector_ui_@prev
+				}
+			}
+		}
+	}
+	option = {
+		name = "scis_sector_shaping_ui.system_options.b"
+		custom_gui = "scis_sector_shaping_system_option"
+		hidden_effect = {
+		}
+	}
+	# detached
+	option = {
+		name = "scis_sector_shaping_ui.system_options.d"
+		custom_gui = "scis_sector_shaping_system_option"
+		custom_tooltip = "scis_sector_shaping_ui.system_options.d.tt"
+		allow = {
+			custom_tooltip = {
+				fail_text = "scis_sector_shaping_ui.system_options.d.sector"
+				solar_system = {
+				 scis_sector_shaping_system_detachedable_sector = yes
+				}
+			}
+			custom_tooltip = {
+				fail_text = "scis_sector_shaping_ui.system_options.d.capital"
+				solar_system = {
+				 scis_sector_shaping_system_detachedable_capital = yes
+				}
+			}
+			custom_tooltip = {
+				fail_text = "scis_sector_shaping_ui.system_options.d.colony"
+				solar_system = {
+					if = {
+						limit = {
+							exists = sector
+						}
+					 scis_sector_shaping_system_detachedable_colony = yes
+					}
+				}
+			}
+		}
+		hidden_effect = {
+			fleet_event = {
+				id = scis_sector_shaping_system_opt.11
+			}
+			solar_system = {
+				set_timed_star_flag = {
+					flag = scis_sector_shaping_sector_xx
+					days = 2
+				}
+				set_timed_star_flag = {
+					flag = scis_sector_shaping_system_updated
+					days = 2
+				}
+				set_star_flag = scis_sector_shaping_system_updated_ui
+			}
+		}
+	}
+	# current sector
+	option = {
+		name = "scis_sector_shaping_ui.system_options.0"
+		custom_gui = "scis_sector_shaping_system_option"
+		custom_tooltip = "scis_sector_shaping_ui.system_options.0.tt"
+		trigger = {
+			exists = event_target:scis_sector_shaping_system_ui_sector
+		}
+		allow = {
+			custom_tooltip = {
+				fail_text = "scis_sector_shaping_ui.system_options.a.sector"
+				solar_system = {
+				 scis_sector_shaping_system_attachedable_sector = yes
+				}
+			}
+		}
+	}
+	# 1st candidate
+	option = {
+		name = "scis_sector_shaping_ui.system_options.1"
+		custom_gui = "scis_sector_shaping_system_option"
+		custom_tooltip = "scis_sector_shaping_ui.system_options.1.tt"
+		trigger = {
+			exists = event_target:scis_sector_shaping_sector_ui_01
+		}
+		allow = {
+			custom_tooltip = {
+				fail_text = "scis_sector_shaping_ui.system_options.d.capital"
+				solar_system = {
+				 scis_sector_shaping_system_detachedable_capital = yes
+				}
+			}
+			custom_tooltip = {
+				fail_text = "scis_sector_shaping_ui.system_options.d.colony"
+				solar_system = {
+					if = {
+						limit = {
+							exists = sector
+						}
+					 scis_sector_shaping_system_detachedable_colony = yes
+					}
+				}
+			}
+		}
+		hidden_effect = {
+			solar_system = {
+			 scis_sector_shaping_system_attach_to = {
+					id = 1
+				}
+			}
+		}
+	}
+	# 2nd candidate
+	option = {
+		name = "scis_sector_shaping_ui.system_options.2"
+		custom_gui = "scis_sector_shaping_system_option"
+		custom_tooltip = "scis_sector_shaping_ui.system_options.2.tt"
+		trigger = {
+			exists = event_target:scis_sector_shaping_sector_ui_02
+		}
+		allow = {
+			custom_tooltip = {
+				fail_text = "scis_sector_shaping_ui.system_options.d.capital"
+				solar_system = {
+				 scis_sector_shaping_system_detachedable_capital = yes
+				}
+			}
+			custom_tooltip = {
+				fail_text = "scis_sector_shaping_ui.system_options.d.colony"
+				solar_system = {
+					if = {
+						limit = {
+							exists = sector
+						}
+					 scis_sector_shaping_system_detachedable_colony = yes
+					}
+				}
+			}
+		}
+		hidden_effect = {
+			solar_system = {
+			 scis_sector_shaping_system_attach_to = {
+					id = 2
+				}
+			}
+		}
+	}
+	# 3d candidate
+	option = {
+		name = "scis_sector_shaping_ui.system_options.3"
+		custom_gui = "scis_sector_shaping_system_option"
+		custom_tooltip = "scis_sector_shaping_ui.system_options.3.tt"
+		trigger = {
+			exists = event_target:scis_sector_shaping_sector_ui_03
+		}
+		allow = {
+			custom_tooltip = {
+				fail_text = "scis_sector_shaping_ui.system_options.d.capital"
+				solar_system = {
+				 scis_sector_shaping_system_detachedable_capital = yes
+				}
+			}
+			custom_tooltip = {
+				fail_text = "scis_sector_shaping_ui.system_options.d.colony"
+				solar_system = {
+					if = {
+						limit = {
+							exists = sector
+						}
+					 scis_sector_shaping_system_detachedable_colony = yes
+					}
+				}
+			}
+		}
+		hidden_effect = {
+			solar_system = {
+			 scis_sector_shaping_system_attach_to = {
+					id = 3
+				}
+			}
+		}
+	}
+	# 4th candidate
+	option = {
+		name = "scis_sector_shaping_ui.system_options.4"
+		custom_gui = "scis_sector_shaping_system_option"
+		custom_tooltip = "scis_sector_shaping_ui.system_options.4.tt"
+		trigger = {
+			exists = event_target:scis_sector_shaping_sector_ui_04
+		}
+		allow = {
+			custom_tooltip = {
+				fail_text = "scis_sector_shaping_ui.system_options.d.capital"
+				solar_system = {
+				 scis_sector_shaping_system_detachedable_capital = yes
+				}
+			}
+			custom_tooltip = {
+				fail_text = "scis_sector_shaping_ui.system_options.d.colony"
+				solar_system = {
+					if = {
+						limit = {
+							exists = sector
+						}
+					 scis_sector_shaping_system_detachedable_colony = yes
+					}
+				}
+			}
+		}
+		hidden_effect = {
+			solar_system = {
+			 scis_sector_shaping_system_attach_to = {
+					id = 4
+				}
+			}
+		}
+	}
+	# 5th candidate
+	option = {
+		name = "scis_sector_shaping_ui.system_options.5"
+		custom_gui = "scis_sector_shaping_system_option"
+		custom_tooltip = "scis_sector_shaping_ui.system_options.5.tt"
+		trigger = {
+			exists = event_target:scis_sector_shaping_sector_ui_05
+		}
+		allow = {
+			custom_tooltip = {
+				fail_text = "scis_sector_shaping_ui.system_options.d.capital"
+				solar_system = {
+				 scis_sector_shaping_system_detachedable_capital = yes
+				}
+			}
+			custom_tooltip = {
+				fail_text = "scis_sector_shaping_ui.system_options.d.colony"
+				solar_system = {
+					if = {
+						limit = {
+							exists = sector
+						}
+					 scis_sector_shaping_system_detachedable_colony = yes
+					}
+				}
+			}
+		}
+		hidden_effect = {
+			solar_system = {
+			 scis_sector_shaping_system_attach_to = {
+					id = 5
+				}
+			}
+		}
+	}
+	after = {
+		hidden_effect = {
+			# clear  flags
+			solar_system = {
+				remove_star_flag = scis_sector_shaping_system_opt_ui_opened
+			}
+			# clear dummies
+		 scis_sector_shaping_delete_dummy = {
+				stDummy = scis_sector_shaping_sector_ui_01
+			}
+		 scis_sector_shaping_delete_dummy = {
+				stDummy = scis_sector_shaping_sector_ui_02
+			}
+		 scis_sector_shaping_delete_dummy = {
+				stDummy = scis_sector_shaping_sector_ui_03
+			}
+		 scis_sector_shaping_delete_dummy = {
+				stDummy = scis_sector_shaping_sector_ui_04
+			}
+		 scis_sector_shaping_delete_dummy = {
+				stDummy = scis_sector_shaping_sector_ui_05
+			}
+		}
+	}
+}
+
+# This = Planet
+# Temporarily resets ownership of the system to drop the sector. 
+fleet_event = {
+	id = scis_sector_shaping_system_opt.11
+	hide_window = yes
+	is_triggered_only = yes
+	immediate = {
+		solar_system = {
+			space_owner = {
+				save_event_target_as = scis_sector_shaping_original_owner
+			}
+			create_country = {
+				name = "dummy"
+				type = global_event
+				effect = {
+				}
+			}
+			starbase = {
+				set_owner = last_created_country
+			}
+		}
+		fleet_event = {
+			id = scis_sector_shaping_system_opt.12
+			days = 2
+		}
+	}
+}
+
+#	^ Give system back to previous owner
+fleet_event = {
+	id = scis_sector_shaping_system_opt.12
+	hide_window = yes
+	is_triggered_only = yes
+	immediate = {
+		solar_system = {
+			starbase = {
+				set_owner = event_target:scis_sector_shaping_original_owner
+			}
+			every_fleet_in_system = {
+				limit = {
+					or = {
+						is_ship_size = mining_station
+						is_ship_size = research_station
+						is_ship_size = observation_station
+					}
+				}
+				set_owner = event_target:scis_sector_shaping_original_owner
+			}
+		}
+	}
+}
