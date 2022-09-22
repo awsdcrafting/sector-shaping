@@ -40,6 +40,68 @@ scis_sector_shaping_sector_is_neighbor = {
 	}
 }
 
+scis_sector_shaping_attach = {
+	or = {
+		scis_sector_shaping_attach_any = yes
+		scis_sector_shaping_attach_specific = yes
+	}
+}
+
+scis_sector_shaping_attach_any = {
+	has_global_flag = scis_sector_shaping_sector_shape_on
+	has_star_flag = scis_sector_shaping_flag_attach_any
+	owner = {
+		any_system_within_border = {
+			has_hyperlane_to = root
+			distance = {
+				source = root
+				type = hyperlane
+				min_jumps = 1
+				max_jumps = 1
+			}
+			exists = sector
+		}
+	}
+}
+
+scis_sector_shaping_has_star_flag = {
+	has_star_flag = scis_sector_shaping_sector_$id$
+}
+
+scis_sector_shaping_attach_specific = {
+	has_global_flag = scis_sector_shaping_sector_shape_on
+	owner = {
+		any_system_within_border = {
+			has_hyperlane_to = root
+			distance = {
+				source = root
+				type = hyperlane
+				min_jumps = 1
+				max_jumps = 1
+			}
+			exists = sector
+			or = {
+				root = { has_star_flag = scis_sector_shaping_flag_attach_any }
+				and = {
+					root = {
+						has_star_flag = scis_sector_shaping_flag_attach_specific
+					}
+					sector.sector_capital.solar_system = {
+						is_variable_set = sector_id
+						root = {
+							scis_sector_shaping_has_star_flag = {
+								id = prev.sector_id
+							}
+						}
+					}
+				}
+
+			}
+
+		}
+	}
+}
+
 scis_sector_shaping_system_sector_init = {
 	nand = {
 		has_global_flag = scis_sector_shaping_sector_shape_on		# mod on

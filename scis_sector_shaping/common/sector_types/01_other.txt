@@ -1,25 +1,26 @@
-
-# Disable default sector
 normal_sector = {
 
 	system_scores = {
 		base = 1
 
 		modifier = {
-			mult = -1
+			mult = -10
 			has_global_flag = scis_sector_shaping_sector_shape_on
 		}
 
+		#modifier = {
+		#	mult = -10
+		#	scis_sector_shaping_attach = yes
+		#}
 	}
 
 	local_capital_scores = {
 		base = 1
 
 		modifier = {
-			mult = -1
+			mult = -10
 			has_global_flag = scis_sector_shaping_sector_shape_on
 		}
-
 	}
 
 	resource_conversion_table = {
