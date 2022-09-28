@@ -66,10 +66,10 @@ scis_sector_shaping_sector_to_scope = {
 # Prev = Fleet
 # Sets a special flag to increase weight for sector.
 scis_sector_shaping_system_attach_to = {
- scis_sector_shaping_system_attach_del = yes
+	scis_sector_shaping_system_attach_del = yes
 	owner = {
 		random_owned_sector = {
-			limit = { event_target:scis_sector_shaping_sector_ui_$id$ = { has_leader_flag = scis_sector_shaping_sector_ui_@prev } }
+			limit = { event_target:scis_sector_shaping_sector_ui_0$id$ = { has_leader_flag = scis_sector_shaping_sector_ui_@prev } }
 		 scis_sector_shaping_sector_attach_def = yes
 		}
 	}
