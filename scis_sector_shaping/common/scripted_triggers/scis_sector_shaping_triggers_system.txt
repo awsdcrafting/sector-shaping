@@ -21,7 +21,13 @@ scis_sector_shaping_system_detachedable_sector = {
 scis_sector_shaping_system_detachedable_capital = {
 	not = {
 		any_system_planet = {
-			is_capital = yes
+			and = {
+				is_capital = yes
+				exists = owner
+				owner = {
+					is_primitive = no
+				}
+			}
 		}
 	}
 }
